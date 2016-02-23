@@ -1,0 +1,26 @@
+MandarinMedien\MMCmfMenuBundle\Entity\Menu:
+    type: entity
+    inheritanceType: SINGLE_TABLE
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+
+    oneToMany:
+        items:
+          targetEntity: MandarinMedien\MMCmfMenuBundle\Entity\Menu
+          mappedBy: parent
+
+    manyToOne:
+        parent:
+            targetEntity: MandarinMedien\MMCmfMenuBundle\Entity\Menu
+            inversedBy: items
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,5 @@
+<ul class="{{ menu.name }}">
+    {% for item in menu.items %}
+        {{ renderMenuItem(item) }}
+    {% endfor %}
+</ul>

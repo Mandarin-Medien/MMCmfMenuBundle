@@ -1,0 +1,30 @@
+admin_menu:
+    path:     /
+    defaults: { _controller: "MMCmfMenuBundle:Menu:index" }
+
+admin_menu_show:
+    path:     /{id}/show
+    defaults: { _controller: "MMCmfMenuBundle:Menu:show" }
+
+admin_menu_new:
+    path:     /new
+    defaults: { _controller: "MMCmfMenuBundle:Menu:new" }
+
+admin_menu_create:
+    path:     /create
+    defaults: { _controller: "MMCmfMenuBundle:Menu:create" }
+    methods:  POST
+
+admin_menu_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MMCmfMenuBundle:Menu:edit" }
+
+admin_menu_update:
+    path:     /{id}/update
+    defaults: { _controller: "MMCmfMenuBundle:Menu:update" }
+    methods:  [POST, PUT]
+
+admin_menu_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MMCmfMenuBundle:Menu:delete" }
+    methods:  [POST, DELETE]

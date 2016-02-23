@@ -1,0 +1,13 @@
+MandarinMedien\MMCmfMenuBundle\Entity\MenuItem:
+    type: entity
+    table: null
+    fields:
+        title:
+            type: string
+            length: 255
+
+    manyToOne:
+        nodeRoute:
+            targetEntity: MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute
+
+    lifecycleCallbacks: {  }

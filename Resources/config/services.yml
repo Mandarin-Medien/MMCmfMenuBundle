@@ -1,0 +1,7 @@
+services:
+    mm_cmf_menu.twig_render_extension:
+         class: MandarinMedien\MMCmfMenuBundle\Twig\MenuRenderExtension
+         arguments: ["@service_container"]
+         tags:
+            - {name: twig.extension }
+
