@@ -11,22 +11,22 @@ class Menu
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var ArrayCollection
      */
-    private $items;
+    protected $items;
 
     /**
      * @var Menu
      */
-    private $parent;
+    protected $parent;
 
 
     public function __construct()
@@ -131,6 +131,12 @@ class Menu
     {
         $this->parent = $parent;
         return $this;
+    }
+
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
 

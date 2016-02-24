@@ -62,7 +62,10 @@ class MenuRenderExtension extends \Twig_Extension
      */
     public function renderMenuItemFunction(\Twig_Environment $twig, MenuItem $item, array $options=array())
     {
-        return $twig->render("@MMCmfMenu/Default/menuItem.html.twig", array('item' => $item));
+        if($item->getNodeRoute())
+            return $twig->render("@MMCmfMenu/Default/menuItem.html.twig", array('item' => $item));
+
+        return null;
     }
 
 
