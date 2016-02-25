@@ -32,7 +32,7 @@ class Menu
     /**
      * @var integer
      */
-    protected $position;
+    protected $position = 0;
 
 
     public function __construct()
