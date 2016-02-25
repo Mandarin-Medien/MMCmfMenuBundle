@@ -12,15 +12,24 @@ MandarinMedien\MMCmfMenuBundle\Entity\Menu:
         name:
             type: string
             length: 255
+        position:
+            type: integer
 
     oneToMany:
         items:
           targetEntity: MandarinMedien\MMCmfMenuBundle\Entity\Menu
+          orderBy:
+              position: ASC
           mappedBy: parent
+          cascade:
+              - all
+          orphanRemoval: true
 
     manyToOne:
         parent:
             targetEntity: MandarinMedien\MMCmfMenuBundle\Entity\Menu
             inversedBy: items
+            cascade:
+                - all
 
     lifecycleCallbacks: {  }

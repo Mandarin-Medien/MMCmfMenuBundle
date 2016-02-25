@@ -12,4 +12,5 @@ MandarinMedien\MMCmfMenuBundle\Entity\MenuItem:
             joinColumn:
                 onDelete: "SET NULL"
 
+
     lifecycleCallbacks: {  }

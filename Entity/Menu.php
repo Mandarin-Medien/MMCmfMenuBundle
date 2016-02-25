@@ -29,6 +29,12 @@ class Menu
     protected $parent;
 
 
+    /**
+     * @var integer
+     */
+    protected $position;
+
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -101,6 +107,7 @@ class Menu
     public function addItem(MenuItem $item)
     {
         $this->items->add($item);
+        $item->setParent($this);
         return $this;
     }
 
@@ -112,6 +119,7 @@ class Menu
     public function removeItem(MenuItem $item)
     {
         $this->items->removeElement($item);
+        $item->setParent(null);
         return $this;
     }
 
@@ -130,6 +138,25 @@ class Menu
     public function setParent($parent)
     {
         $this->parent = $parent;
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     * @return MenuItem
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
         return $this;
     }
 
