@@ -1,5 +1,5 @@
 <li>
-    <a href="{{ path("mm_cmf_node_route", {'route' : item.nodeRoute.route|trim("/")}) }}">{{ item.name }}</a>
+    <a href="{{ cmfPath(item.nodeRoute) }}">{{ item.name }}</a>
     {% if item.items|length %}
         {{ renderMenu(item) }}
     {% endif %}

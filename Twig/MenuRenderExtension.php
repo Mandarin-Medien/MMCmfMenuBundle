@@ -48,7 +48,7 @@ class MenuRenderExtension extends \Twig_Extension
      */
     public function renderMenuFunction(\Twig_Environment $twig, Menu $menu, array $options=array())
     {
-        return $twig->render('MMCmfMenuBundle:Default:menu.html.twig', array('menu' => $menu));
+        return $twig->render('MMCmfMenuBundle:Default:menu.html.twig', array('menu' => $menu, 'options' => $options));
     }
 
 
@@ -63,7 +63,7 @@ class MenuRenderExtension extends \Twig_Extension
     public function renderMenuItemFunction(\Twig_Environment $twig, MenuItem $item, array $options=array())
     {
         if($item->getNodeRoute())
-            return $twig->render("@MMCmfMenu/Default/menuItem.html.twig", array('item' => $item));
+            return $twig->render("@MMCmfMenu/Default/menuItem.html.twig", array('item' => $item, 'options' => $options));
 
         return null;
     }

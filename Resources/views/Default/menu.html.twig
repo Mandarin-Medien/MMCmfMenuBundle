@@ -1,4 +1,4 @@
-<ul class="{{ menu.name }}">
+<ul class="{% if options.classes is defined %}{{ options.classes }} {% endif %}{{ menu.name }}">
     {% for item in menu.items %}
         {{ renderMenuItem(item) }}
     {% endfor %}
