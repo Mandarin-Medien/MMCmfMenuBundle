@@ -1,35 +1,26 @@
 {
-    "name": "mandarinmedien/mmcmfmenubundle",
-    "description": "This bundle provides the functionality to organize and render multiple menus with custom entries based on NodeRoute entites.",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Christof Hufnagel",
-            "email": "ch@mandarin-medien.de"
-        },
-        {
-            "name": "Toni Gurski",
-            "email": "tg@mandarin-medien.de"
-        }
-    ],
-    "require": {
-        "mandarinmedien/mmcmfnodebundle": "dev-master",
-        "mandarinmedien/mmcmfroutingbundle": "dev-master"
+  "name": "mandarinmedien/mmcmfmenubundle",
+  "description": "This bundle provides the functionality to organize and render multiple menus with custom entries based on NodeRoute entites.",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Christof Hufnagel",
+      "email": "ch@mandarin-medien.de"
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:Mandarin-Medien/MMCmfRoutingBundle.git"
-        },
-        {
-            "type": "git",
-            "url": "git@github.com:Mandarin-Medien/MMCmfNodeBundle.git"
-        }
-    ],
-    "autoload" : {
-        "psr-0" : {
-            "MandarinMedien\\MMCmfMenuBundle" : ""
-        }
-    },
-    "target-dir" : "MandarinMedien/MMCmfMenuBundle"
+    {
+      "name": "Toni Gurski",
+      "email": "tg@mandarin-medien.de"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "MandarinMedien\\MMCmfMenuBundle": ""
+    }
+  },
+  "target-dir": "MandarinMedien/MMCmfMenuBundle",
+  "require": {
+    "mandarinmedien/mmcmfnodebundle": "^0.0",
+    "mandarinmedien/mmcmfroutingbundle": "^0.0"
+  }
 }
