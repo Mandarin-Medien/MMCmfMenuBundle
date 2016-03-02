@@ -41,9 +41,9 @@ class CmfPathExtension extends \Twig_Extension
         if($nodeRoute instanceof ExternalNodeRoute) {
             $path = $nodeRoute->getRoute();
         } else {
-            $path = $this->container->get('router')->generate('mm_cmf_node_route', array(
+            $path = preg_replace("#(/{2,})#", '/', $this->container->get('router')->generate('mm_cmf_node_route', array(
                 'route' => $nodeRoute->getRoute()
-            ));
+            )));
         }
 
         return $path;
