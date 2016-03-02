@@ -1,6 +1,8 @@
-<li>
-    <a href="{{ cmfPath(item.nodeRoute) }}">{{ item.name }}</a>
-    {% if item.items|length %}
-        {{ renderMenu(item) }}
+{% set hasSub = (item.items|length ? true : false) %}
+
+<li {% if hasSub %}class="dropdown"{% endif %}>
+    <a {% if hasSub %}class="dropdown-toggle" data-toggle="dropdown" href="#" {% else %}href="{{ cmfPath(item.nodeRoute) }}"{% endif %}>{{ item.name }}</a>
+    {% if hasSub %}
+        {{ renderMenu(item, {'isSub' : true, 'classes' : 'dropdown-menu' }) }}
     {% endif %}
 </li>
