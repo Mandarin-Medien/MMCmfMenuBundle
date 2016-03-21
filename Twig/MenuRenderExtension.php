@@ -4,6 +4,7 @@ namespace MandarinMedien\MMCmfMenuBundle\Twig;
 
 use MandarinMedien\MMCmfMenuBundle\Entity\Menu;
 use MandarinMedien\MMCmfMenuBundle\Entity\MenuItem;
+use MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute;
 use Symfony\Component\DependencyInjection\Container;
 
 class MenuRenderExtension extends \Twig_Extension
@@ -92,7 +93,6 @@ class MenuRenderExtension extends \Twig_Extension
      * @param MenuItem $item
      * @param array $options
      * @return string
-
      */
     public function renderMenuItemFunction(\Twig_Environment $twig, MenuItem $item, array $options = array())
     {
@@ -121,7 +121,10 @@ class MenuRenderExtension extends \Twig_Extension
 
             $menu = $repository->findOneBy(array('name' => $name));
 
+
             if ($menu) {
+
+                $this->decorate($menu);
 
                 try {
                     return $twig->render(
@@ -138,6 +141,42 @@ class MenuRenderExtension extends \Twig_Extension
             }
 
             return null;
+        }
+    }
+
+
+    /**
+     * add some additional properties for rendering to the menu
+     *
+     * @param Menu $menu
+     */
+    protected function decorate(Menu $menu, NodeRoute $nodeRoute = null)
+    {
+        if(is_null($nodeRoute))
+            $nodeRoute = $this->container->get('request')->get('nodeRoute');
+
+        foreach ($menu->getItems() as $item) {
+            if ($item->getNodeRoute() == $nodeRoute) {
+                $item->active = true;
+                $this->decorateParent($item);
+            }
+
+            if (count($item->getItems()) > 0) {
+                $this->decorate($item, $nodeRoute);
+            }
+        }
+    }
+
+    /**
+     * decrorate the menu tree up
+     * @param Menu $menu
+     */
+    protected function decorateParent(Menu $menu)
+    {
+        if(!is_null($parent =  $menu->getParent())) {
+            $parent->inTree = true;
+
+            $this->decorateParent($parent);
         }
     }
 

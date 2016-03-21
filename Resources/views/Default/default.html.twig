@@ -8,7 +8,7 @@
 
 {% block menu_item -%}
     {% if item is defined %}
-        <li>
+        <li {% if item.active is defined or item.inTree is defined %}class="active"{% endif %}>
             <a href="{{ cmfPath(item.nodeRoute) }}">{{ item }}</a>
             {% if item.items.count %}
                 {% set menu = item %}
