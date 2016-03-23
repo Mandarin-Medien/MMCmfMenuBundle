@@ -4,6 +4,7 @@ namespace MandarinMedien\MMCmfMenuBundle\Twig;
 
 use MandarinMedien\MMCmfMenuBundle\Entity\Menu;
 use MandarinMedien\MMCmfMenuBundle\Entity\MenuItem;
+use MandarinMedien\MMCmfRoutingBundle\Entity\ExternalNodeRoute;
 use MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -159,6 +160,11 @@ class MenuRenderExtension extends \Twig_Extension
             if ($item->getNodeRoute() == $nodeRoute) {
                 $item->active = true;
                 $this->decorateParent($item);
+            }
+
+            if($item->getNodeRoute() instanceof ExternalNodeRoute)
+            {
+                $item->external = true;
             }
 
             if (count($item->getItems()) > 0) {

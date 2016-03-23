@@ -6,7 +6,7 @@
     <ul class="{% if level == 1 %}nav navbar-nav{% endif %} {% if hasSub %}dropdown-menu{% endif %}">
 
         {% if hasSub %}
-            <li {% if menu.active is defined%}class="active"{% endif %} ><a href="{{ cmfPath(menu.nodeRoute) }}"></span>{{ menu }}</span></a></li>
+            <li {% if menu.active is defined%}class="active"{% endif %} ><a href="{{ cmfPath(menu.nodeRoute) }}" {% if menu.external is defined %}target="_blank"{% endif %}></span>{{ menu }}</span></a></li>
         {% endif %}
 
         {% for item in menu.items %}
@@ -30,7 +30,7 @@
             </li>
         {% else %}
             <li{% if item.active is defined or item.inTree is defined %} class="active"{% endif %}>
-                <a href="{{ cmfPath(item.nodeRoute) }}"><span>{{ item }}</span></a>
+                <a href="{{ cmfPath(item.nodeRoute) }}" {% if item.external is defined %}target="_blank"{% endif %} ><span>{{ item }}</span></a>
                 {% if item.items.count %}
                     {% set menu = item %}
                     {{ block('menu_list') }}

@@ -9,7 +9,7 @@
 {% block menu_item -%}
     {% if item is defined %}
         <li {% if item.active is defined or item.inTree is defined %}class="active"{% endif %}>
-            <a href="{{ cmfPath(item.nodeRoute) }}">{{ item }}</a>
+            <a href="{{ cmfPath(item.nodeRoute) }}" {% if item.external is defined %}target="_blank"{% endif %}>{{ item }}</a>
             {% if item.items.count %}
                 {% set menu = item %}
                 {{ block('menu_list') }}
