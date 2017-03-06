@@ -154,7 +154,7 @@ class MenuRenderExtension extends \Twig_Extension
     protected function decorate(Menu $menu, NodeRoute $nodeRoute = null)
     {
         if(is_null($nodeRoute))
-            $nodeRoute = $this->container->get('request')->get('nodeRoute');
+            $nodeRoute = $this->container->get('request_stack')->getCurrentRequest()->get('nodeRoute');
 
         foreach ($menu->getItems() as $item) {
             if ($item->getNodeRoute() == $nodeRoute) {
