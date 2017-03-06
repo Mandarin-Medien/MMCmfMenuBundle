@@ -2,9 +2,10 @@
 
 namespace MandarinMedien\MMCmfMenuBundle\Form;
 
+use MandarinMedien\MMCmfMenuBundle\Entity\Menu;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MenuType extends AbstractType
 {
@@ -21,19 +22,19 @@ class MenuType extends AbstractType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MandarinMedien\MMCmfMenuBundle\Entity\Menu'
+            'data_class' => Menu::class
         ));
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'mandarinmedien_mmcmfmenubundle_menu';
     }
