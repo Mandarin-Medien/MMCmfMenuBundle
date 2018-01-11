@@ -14,11 +14,8 @@
     }
   ],
   "autoload": {
-    "psr-0": {
-      "MandarinMedien\\MMCmfMenuBundle": ""
-    }
+    "psr-4": { "MandarinMedien\\MMCmfMenuBundle\\": ""}
   },
-  "target-dir": "MandarinMedien/MMCmfMenuBundle",
   "require": {
     "mandarinmedien/mmcmfnodebundle": "^0.1",
     "mandarinmedien/mmcmfroutingbundle": "^0.1"
