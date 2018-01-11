@@ -4,16 +4,47 @@ namespace MandarinMedien\MMCmfMenuBundle\Twig;
 
 use MandarinMedien\MMCmfMenuBundle\Entity\Menu;
 use MandarinMedien\MMCmfMenuBundle\Entity\MenuItem;
+use MandarinMedien\MMCmfRoutingBundle\Entity\ExternalNodeRoute;
+use MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute;
 use Symfony\Component\DependencyInjection\Container;
 
 class MenuRenderExtension extends \Twig_Extension
 {
 
     private $container;
+    private $templates;
 
     public function __construct(Container $container)
     {
         $this->container = $container;
+    }
+
+
+    /**
+     * register menu template
+     *
+     * @param $name
+     * @param $template
+     */
+    public function registerTemplate($name, $template)
+    {
+        $this->templates[$name] = $template;
+    }
+
+
+    /**
+     * get menu template by name
+     * @param $name
+     * @return mixed
+     * @throws \Twig_Error_Runtime
+     */
+    public function getTemplate($name)
+    {
+        if ($this->templates[$name]) {
+            return $this->templates[$name];
+        } else {
+            throw new \Twig_Error_Runtime(sprintf('Template %s not found', $name));
+        }
     }
 
 
@@ -41,29 +72,33 @@ class MenuRenderExtension extends \Twig_Extension
     /**
      * renders the menu
      *
+     * @deprecated deprecated since 0.0.2
+     *
      * @param \Twig_Environment $twig
      * @param Menu $menu
      * @param array $options
      * @return string
      */
-    public function renderMenuFunction(\Twig_Environment $twig, Menu $menu, array $options=array())
+    public function renderMenuFunction(\Twig_Environment $twig, Menu $menu, array $options = array())
     {
-        return $twig->render('MMCmfMenuBundle:Default:menu.html.twig', array('menu' => $menu));
+        return $twig->render('MMCmfMenuBundle:Default:menu.html.twig', array('menu' => $menu, 'options' => $options));
     }
 
 
     /**
      * renders an menuitem
      *
+     * @deprecated deprecated since 0.0.2
+     *
      * @param \Twig_Environment $twig
      * @param MenuItem $item
      * @param array $options
      * @return string
      */
-    public function renderMenuItemFunction(\Twig_Environment $twig, MenuItem $item, array $options=array())
+    public function renderMenuItemFunction(\Twig_Environment $twig, MenuItem $item, array $options = array())
     {
-        if($item->getNodeRoute())
-            return $twig->render("@MMCmfMenu/Default/menuItem.html.twig", array('item' => $item));
+        if ($item->getNodeRoute())
+            return $twig->render("@MMCmfMenu/Default/menuItem.html.twig", array('item' => $item, 'options' => $options));
 
         return null;
     }
@@ -75,22 +110,79 @@ class MenuRenderExtension extends \Twig_Extension
      * @param \Twig_Environment $twig
      * @param $name
      * @param array $options
+     * @param string $template
      * @return null|string
      */
-    public function renderMenuByNameFunction(\Twig_Environment $twig, $name, array $options= array())
+    public function renderMenuByNameFunction(\Twig_Environment $twig, $name, array $options = array(), $template = 'default')
     {
 
         // find the menu by name
-        if($name) {
+        if ($name) {
             $repository = $this->container->get("doctrine.orm.entity_manager")->getRepository('MMCmfMenuBundle:Menu');
 
             $menu = $repository->findOneBy(array('name' => $name));
 
-            if($menu) {
-                return $this->renderMenuFunction($twig, $menu, $options);
+
+            if ($menu) {
+
+                $this->decorate($menu);
+
+                try {
+                    return $twig->render(
+                        $this->getTemplate($template),
+                        array(
+                            'menu' => $menu,
+                            'options' => array()
+                        )
+                    );
+                } catch (\Exception $e) {
+                    return $this->renderMenuFunction($twig, $menu, $options);
+                }
+
             }
 
             return null;
+        }
+    }
+
+
+    /**
+     * add some additional properties for rendering to the menu
+     *
+     * @param Menu $menu
+     */
+    protected function decorate(Menu $menu, NodeRoute $nodeRoute = null)
+    {
+        if(is_null($nodeRoute))
+            $nodeRoute = $this->container->get('request_stack')->getCurrentRequest()->get('nodeRoute');
+
+        foreach ($menu->getItems() as $item) {
+            if ($item->getNodeRoute() == $nodeRoute) {
+                $item->active = true;
+                $this->decorateParent($item);
+            }
+
+            if($item->getNodeRoute() instanceof ExternalNodeRoute)
+            {
+                $item->external = true;
+            }
+
+            if (count($item->getItems()) > 0) {
+                $this->decorate($item, $nodeRoute);
+            }
+        }
+    }
+
+    /**
+     * decrorate the menu tree up
+     * @param Menu $menu
+     */
+    protected function decorateParent(Menu $menu)
+    {
+        if(!is_null($parent =  $menu->getParent())) {
+            $parent->inTree = true;
+
+            $this->decorateParent($parent);
         }
     }
 

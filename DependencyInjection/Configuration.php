@@ -2,6 +2,7 @@
 
 namespace MandarinMedien\MMCmfMenuBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -23,7 +24,31 @@ class Configuration implements ConfigurationInterface
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
+        $this->addBundleConfig($rootNode);
 
         return $treeBuilder;
+
+
+    }
+
+
+    /**
+     * set config definition
+     * @param ArrayNodeDefinition $node
+     */
+    private function addBundleConfig(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('templates')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->end()
+                            ->scalarNode('template')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

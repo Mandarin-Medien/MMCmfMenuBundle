@@ -1,4 +1,9 @@
-<ul class="{{ menu.name }}">
+<ul class="{% if options.classes is defined %}{{ options.classes }} {% endif %}{{ menu.name }}">
+
+    {% if options.isSub is defined and options.isSub %}
+        <li {% if menu.active is defined %}class="active"{% endif %} ><a class="parent" href="{{ cmfPath(menu.nodeRoute) }}">{{ menu.name }}</a></li>
+    {% endif %}
+
     {% for item in menu.items %}
         {{ renderMenuItem(item) }}
     {% endfor %}

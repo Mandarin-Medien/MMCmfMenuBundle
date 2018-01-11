@@ -1,0 +1,41 @@
+{% set level = 0 %}
+{% set hasSub = 0 %}
+
+{% block menu_list -%}
+    {% set level = level+1 %}
+    <ul class="{% if level == 1 %}nav navbar-nav{% endif %} {% if hasSub %}dropdown-menu{% endif %}">
+
+        {% if hasSub %}
+            <li {% if menu.active is defined%}class="active"{% endif %} ><a href="{{ cmfPath(menu.nodeRoute) }}" {% if menu.external is defined %}target="_blank"{% endif %}></span>{{ menu }}</span></a></li>
+        {% endif %}
+
+        {% for item in menu.items %}
+            {{ block('menu_item') }}
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block menu_item -%}
+    {% if item is defined %}
+
+        {% set hasSub = item.items.count %}
+
+        {% if hasSub %}
+            <li class="dropdown{% if item.active is defined or item.inTree is defined %} active{% endif %}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>{{ item }}</span></a>
+                {% if item.items.count %}
+                    {% set menu = item %}
+                    {{ block('menu_list') }}
+                {% endif %}
+            </li>
+        {% else %}
+            <li{% if item.active is defined or item.inTree is defined %} class="active"{% endif %}>
+                <a href="{{ cmfPath(item.nodeRoute) }}" {% if item.external is defined %}target="_blank"{% endif %} ><span>{{ item }}</span></a>
+                {% if item.items.count %}
+                    {% set menu = item %}
+                    {{ block('menu_list') }}
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endif %}
+{% endblock %}

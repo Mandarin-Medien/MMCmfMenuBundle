@@ -1,6 +1,13 @@
 services:
-    mm_cmf_menu.twig_render_extension:
+    mm_cmf_menu.twig_menu_extension:
          class: MandarinMedien\MMCmfMenuBundle\Twig\MenuRenderExtension
+         arguments: ["@service_container"]
+         tags:
+            - {name: twig.extension }
+
+
+    mm_cmf_menu.twig_path_extension:
+         class: MandarinMedien\MMCmfMenuBundle\Twig\CmfPathExtension
          arguments: ["@service_container"]
          tags:
             - {name: twig.extension }

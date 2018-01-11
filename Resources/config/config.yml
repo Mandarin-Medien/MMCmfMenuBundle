@@ -1,0 +1,4 @@
+mm_cmf_menu:
+    templates:
+        - { name: 'default', template: "MMCmfMenuBundle:Default:default.html.twig" }
+        - { name: 'bootstrap', template: "MMCmfMenuBundle:Default:bootstrap.html.twig" }
