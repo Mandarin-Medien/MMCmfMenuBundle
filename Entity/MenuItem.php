@@ -16,7 +16,7 @@ class MenuItem extends Menu
 
 
     /**
-     * @var NodeRoute
+     * @var NodeRoute|null
      */
     private $nodeRoute;
 
@@ -48,7 +48,7 @@ class MenuItem extends Menu
 
 
     /**
-     * @return NodeRoute
+     * @return NodeRoute|null
      */
     public function getNodeRoute()
     {
@@ -56,10 +56,10 @@ class MenuItem extends Menu
     }
 
     /**
-     * @param NodeRoute $node
+     * @param NodeRoute|null $nodeRoute
      * @return MenuItem
      */
-    public function setNodeRoute(NodeRoute $nodeRoute)
+    public function setNodeRoute(NodeRoute $nodeRoute = null)
     {
         $this->nodeRoute = $nodeRoute;
         return $this;
