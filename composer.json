@@ -18,5 +18,8 @@
   },
   "require": {
     "mandarinmedien/mmcmfnodebundle": "^0.4"
+  },
+  "suggest": {
+    "doctrine/data-fixtures": "For loading ORM fixtures"
   }
 }

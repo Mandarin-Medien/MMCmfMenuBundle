@@ -5,21 +5,15 @@ namespace MandarinMedien\MMCmfContentBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use MandarinMedien\MMCmfContentBundle\Entity\ContainerContentNode;
-use MandarinMedien\MMCmfContentBundle\Entity\Page;
-use MandarinMedien\MMCmfContentBundle\Entity\ParagraphContentNode;
-use MandarinMedien\MMCmfContentBundle\Entity\RowContentNode;
 use MandarinMedien\MMCmfMenuBundle\Entity\Menu;
 use MandarinMedien\MMCmfMenuBundle\Entity\MenuItem;
+use MandarinMedien\MMCmfNodeBundle\Entity\NodeRoute;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
 
 
 class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-
     /**
      * @var ContainerInterface
      */
@@ -42,9 +36,11 @@ class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface, C
         $menu->setName('Main');
         $menu->setPosition(0);
 
-        $repoNodeRoute = $manager->getRepository('MMCmfNodeBundle:NodeRoute');
+        $repoNodeRoute = $manager->getRepository(NodeRoute::class);
 
-
+        /**
+         * @var $nodeRoutes NodeRoute[]|array
+         */
         $nodeRoutes = $repoNodeRoute->findAll();
 
         $menuItemPos = 1;
