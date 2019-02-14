@@ -2,7 +2,7 @@
 
 namespace MandarinMedien\MMCmfMenuBundle\Entity;
 
-use MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute;
+use MandarinMedien\MMCmfNodeBundle\Entity\NodeRoute;
 /**
  * MenuItem
  */

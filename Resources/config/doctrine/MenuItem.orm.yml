@@ -8,7 +8,7 @@ MandarinMedien\MMCmfMenuBundle\Entity\MenuItem:
 
     manyToOne:
         nodeRoute:
-            targetEntity: MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute
+            targetEntity: MandarinMedien\MMCmfNodeBundle\Entity\NodeRoute
             joinColumn:
                 onDelete: "SET NULL"
 

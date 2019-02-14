@@ -17,7 +17,6 @@
     "psr-4": { "MandarinMedien\\MMCmfMenuBundle\\": ""}
   },
   "require": {
-    "mandarinmedien/mmcmfnodebundle": "^0.3",
-    "mandarinmedien/mmcmfroutingbundle": "^0.3"
+    "mandarinmedien/mmcmfnodebundle": "^0.4"
   }
 }

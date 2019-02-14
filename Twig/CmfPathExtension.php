@@ -2,8 +2,8 @@
 
 namespace MandarinMedien\MMCmfMenuBundle\Twig;
 
-use MandarinMedien\MMCmfRoutingBundle\Entity\ExternalNodeRoute;
-use MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute;
+use MandarinMedien\MMCmfNodeBundle\Entity\ExternalNodeRoute;
+use MandarinMedien\MMCmfNodeBundle\Entity\NodeRoute;
 use Symfony\Component\DependencyInjection\Container;
 
 class CmfPathExtension extends \Twig_Extension
@@ -42,7 +42,7 @@ class CmfPathExtension extends \Twig_Extension
             if ($nodeRoute instanceof ExternalNodeRoute) {
                 $path = $nodeRoute->getRoute();
             } else {
-                $path = preg_replace("#(/{2,})#", '/', $this->container->get('router')->generate('mm_cmf_node_route', array(
+                $path = preg_replace("#(/{2,})#", '/', $this->container->get('router')->generate('mm_cmf_node', array(
                     'route' => $nodeRoute->getRoute()
                 )));
             }

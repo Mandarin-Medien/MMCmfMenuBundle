@@ -4,8 +4,8 @@ namespace MandarinMedien\MMCmfMenuBundle\Twig;
 
 use MandarinMedien\MMCmfMenuBundle\Entity\Menu;
 use MandarinMedien\MMCmfMenuBundle\Entity\MenuItem;
-use MandarinMedien\MMCmfRoutingBundle\Entity\ExternalNodeRoute;
-use MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute;
+use MandarinMedien\MMCmfNodeBundle\Entity\ExternalNodeRoute;
+use MandarinMedien\MMCmfNodeBundle\Entity\NodeRoute;
 use Symfony\Component\DependencyInjection\Container;
 
 class MenuRenderExtension extends \Twig_Extension

@@ -42,7 +42,7 @@ class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface, C
         $menu->setName('Main');
         $menu->setPosition(0);
 
-        $repoNodeRoute = $manager->getRepository('MMCmfRoutingBundle:NodeRoute');
+        $repoNodeRoute = $manager->getRepository('MMCmfNodeBundle:NodeRoute');
 
 
         $nodeRoutes = $repoNodeRoute->findAll();
