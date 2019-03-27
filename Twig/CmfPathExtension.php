@@ -2,8 +2,10 @@
 
 namespace MandarinMedien\MMCmfMenuBundle\Twig;
 
+use MandarinMedien\MMCmfNodeBundle\Entity\AutoNodeRoute;
 use MandarinMedien\MMCmfNodeBundle\Entity\ExternalNodeRoute;
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeRoute;
+use MandarinMedien\MMCmfNodeBundle\Entity\RoutableNodeInterface;
 use Symfony\Component\DependencyInjection\Container;
 
 class CmfPathExtension extends \Twig_Extension
@@ -25,6 +27,9 @@ class CmfPathExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('cmfPath', array($this, "cmfPathFunction"), array(
                 'is_safe' => array('html'),
+            )),
+            new \Twig_SimpleFunction('nodePath', array($this, "nodePathFunction"), array(
+                'is_safe' => array('html'),
             ))
         );
     }
@@ -36,9 +41,9 @@ class CmfPathExtension extends \Twig_Extension
      * @param array $options
      * @return string
      */
-    public function cmfPathFunction(NodeRoute $nodeRoute = null, array $options=array())
+    public function cmfPathFunction(NodeRoute $nodeRoute = null, array $options = array())
     {
-        if($nodeRoute) {
+        if ($nodeRoute) {
             if ($nodeRoute instanceof ExternalNodeRoute) {
                 $path = $nodeRoute->getRoute();
             } else {
@@ -51,6 +56,37 @@ class CmfPathExtension extends \Twig_Extension
         return $path ?: '';
     }
 
+    /**
+     * build url by given node
+     * @param NodeRoute $nodeRoute
+     * @param array $options
+     * @return string
+     */
+    public function nodePathFunction(RoutableNodeInterface $node = null, array $options = array())
+    {
+        $nodeRoute = null;
+        foreach ($node->getRoutes() as $feNodeRoute) {
+            if ($feNodeRoute instanceof AutoNodeRoute) {
+                $nodeRoute = $feNodeRoute;
+                continue;
+            }
+        }
+
+        if (!$nodeRoute)
+            $nodeRoute = count($node->getRoutes()) > 0 ? $node->getRoutes()[0] : null;
+
+        if ($nodeRoute) {
+            if ($nodeRoute instanceof ExternalNodeRoute) {
+                $path = $nodeRoute->getRoute();
+            } else {
+                $path = preg_replace("#(/{2,})#", '/', $this->container->get('router')->generate('mm_cmf_node', array(
+                    'route' => $nodeRoute->getRoute()
+                )));
+            }
+        }
+
+        return $path ?: '';
+    }
 
 
     /**
