@@ -7,8 +7,12 @@ use MandarinMedien\MMCmfMenuBundle\Entity\MenuItem;
 use MandarinMedien\MMCmfNodeBundle\Entity\ExternalNodeRoute;
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeRoute;
 use Symfony\Component\DependencyInjection\Container;
+use Twig\Environment;
+use Twig\Error\RuntimeError;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MenuRenderExtension extends \Twig_Extension
+class MenuRenderExtension extends AbstractExtension
 {
 
     private $container;
@@ -43,7 +47,7 @@ class MenuRenderExtension extends \Twig_Extension
         if ($this->templates[$name]) {
             return $this->templates[$name];
         } else {
-            throw new \Twig_Error_Runtime(sprintf('Template %s not found', $name));
+            throw new RuntimeError(sprintf('Template %s not found', $name));
         }
     }
 
@@ -54,15 +58,15 @@ class MenuRenderExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('renderMenuByName', array($this, "renderMenuByNameFunction"), array(
+            new TwigFunction('renderMenuByName', array($this, "renderMenuByNameFunction"), array(
                 'is_safe' => array('html'),
                 'needs_environment' => true
             )),
-            new \Twig_SimpleFunction('renderMenu', array($this, "renderMenuFunction"), array(
+            new TwigFunction('renderMenu', array($this, "renderMenuFunction"), array(
                 'is_safe' => array('html'),
                 'needs_environment' => true
             )),
-            new \Twig_SimpleFunction('renderMenuItem', array($this, "renderMenuItemFunction"), array(
+            new TwigFunction('renderMenuItem', array($this, "renderMenuItemFunction"), array(
                 'is_safe' => array('html'),
                 'needs_environment' => true
             ))
@@ -79,7 +83,7 @@ class MenuRenderExtension extends \Twig_Extension
      * @param array $options
      * @return string
      */
-    public function renderMenuFunction(\Twig_Environment $twig, Menu $menu, array $options = array())
+    public function renderMenuFunction(Environment $twig, Menu $menu, array $options = array())
     {
         return $twig->render('MMCmfMenuBundle:Default:menu.html.twig', array('menu' => $menu, 'options' => $options));
     }
@@ -95,7 +99,7 @@ class MenuRenderExtension extends \Twig_Extension
      * @param array $options
      * @return string
      */
-    public function renderMenuItemFunction(\Twig_Environment $twig, MenuItem $item, array $options = array())
+    public function renderMenuItemFunction(Environment $twig, MenuItem $item, array $options = array())
     {
         if ($item->getNodeRoute())
             return $twig->render("@MMCmfMenu/Default/menuItem.html.twig", array('item' => $item, 'options' => $options));
@@ -113,7 +117,7 @@ class MenuRenderExtension extends \Twig_Extension
      * @param string $template
      * @return null|string
      */
-    public function renderMenuByNameFunction(\Twig_Environment $twig, $name, array $options = array(), $template = 'default')
+    public function renderMenuByNameFunction(Environment $twig, $name, array $options = array(), $template = 'default')
     {
 
         // find the menu by name

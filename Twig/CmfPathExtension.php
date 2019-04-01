@@ -7,8 +7,10 @@ use MandarinMedien\MMCmfNodeBundle\Entity\ExternalNodeRoute;
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeRoute;
 use MandarinMedien\MMCmfNodeBundle\Entity\RoutableNodeInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class CmfPathExtension extends \Twig_Extension
+class CmfPathExtension extends AbstractExtension
 {
 
     private $container;
@@ -25,10 +27,10 @@ class CmfPathExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('cmfPath', array($this, "cmfPathFunction"), array(
+            new TwigFunction('cmfPath', array($this, "cmfPathFunction"), array(
                 'is_safe' => array('html'),
             )),
-            new \Twig_SimpleFunction('nodePath', array($this, "nodePathFunction"), array(
+            new TwigFunction('nodePath', array($this, "nodePathFunction"), array(
                 'is_safe' => array('html'),
             ))
         );
