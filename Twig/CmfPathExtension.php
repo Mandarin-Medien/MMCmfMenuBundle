@@ -69,7 +69,7 @@ class CmfPathExtension extends AbstractExtension
      */
     public function nodePathFunction(RoutableNodeInterface $node = null, array $options = array())
     {
-        $path = '':
+        $path = '';
         $nodeRoute = null;
         foreach ($node->getRoutes() as $feNodeRoute) {
             if ($feNodeRoute instanceof AutoNodeRoute) {
