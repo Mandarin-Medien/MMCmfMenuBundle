@@ -45,6 +45,9 @@ class CmfPathExtension extends AbstractExtension
      */
     public function cmfPathFunction(NodeRoute $nodeRoute = null, array $options = array())
     {
+
+        $path = '';
+
         if ($nodeRoute) {
             if ($nodeRoute instanceof ExternalNodeRoute) {
                 $path = $nodeRoute->getRoute();
@@ -55,7 +58,7 @@ class CmfPathExtension extends AbstractExtension
             }
         }
 
-        return $path ?: '';
+        return $path;
     }
 
     /**
@@ -66,6 +69,7 @@ class CmfPathExtension extends AbstractExtension
      */
     public function nodePathFunction(RoutableNodeInterface $node = null, array $options = array())
     {
+        $path = '':
         $nodeRoute = null;
         foreach ($node->getRoutes() as $feNodeRoute) {
             if ($feNodeRoute instanceof AutoNodeRoute) {
@@ -87,7 +91,7 @@ class CmfPathExtension extends AbstractExtension
             }
         }
 
-        return $path ?: '';
+        return $path;
     }
 
 
